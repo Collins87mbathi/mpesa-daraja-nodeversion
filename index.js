@@ -9,7 +9,7 @@ const port = 5000;
 
 
 app.use(express.json());
-
+app.use(express.urlencoded({extended:true}))
 
 app.get('/',(req,res)=>{
   res.send("its mpesa api")
@@ -86,14 +86,14 @@ app.get('/simulate',accessToken, (req,res)=> {
     } 
 });
 
-app.post("/confirmation",(req,res)=>{
+app.get("/confirmation",(req,res)=>{
 res.status(200).json(req.body);
- console.log(req.body);
+//  console.log(req.body);
 });
 
-app.post("/validation",(req,res)=>{
+app.get("/validation",(req,res)=>{
 res.status(200).json(req.body);
-console.log(req.body);
+// console.log(req.body);
 })
 
 app.listen(port,()=> {
