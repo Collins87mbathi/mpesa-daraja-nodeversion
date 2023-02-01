@@ -116,7 +116,8 @@ app.get("/confirmation", async (req, res) => {
       id: transaction._id,
     });
   } catch (error) {
-    res.status(500).json(error);
+    // res.status(500).json(error);
+    console.log(error);
   }
 });
 
