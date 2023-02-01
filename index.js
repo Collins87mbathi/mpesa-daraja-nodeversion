@@ -90,8 +90,14 @@ app.get('/simulate',accessToken, (req,res)=> {
 });
 
 app.post("/confirmation",async(req,res)=>{
-   await Payment.create(req.body);
-//  console.log(req.body);
+    try {
+        await Payment.create(req.body);
+        res.status(200).json(req.body);
+        //  console.log(req.body);  
+    } catch (error) {
+       res.status(500).json(error); 
+    }
+  
 });
 
 
