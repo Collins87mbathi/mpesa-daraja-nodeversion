@@ -2,14 +2,17 @@ const express = require("express");
 const request = require("request");
 const app = express();
 const accessToken = require("./utils/auth");
+const CONNECTDB = require("./Database/connect");
+const Payment = require("./models/Payment");
 const port = 5000;
-
-
-
+require("dotenv").config();
 
 
 app.use(express.json());
 app.use(express.urlencoded({extended:true}))
+
+//database
+CONNECTDB(process.env.MONGO_DB_URL)
 
 app.get('/',(req,res)=>{
   res.send("its mpesa api")
@@ -86,8 +89,8 @@ app.get('/simulate',accessToken, (req,res)=> {
     } 
 });
 
-app.post("/confirmation",(req,res)=>{
-res.status(200).json(req.body);
+app.post("/confirmation",async(req,res)=>{
+   await Payment.create(req.body);
 //  console.log(req.body);
 });
 
