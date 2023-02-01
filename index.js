@@ -86,12 +86,13 @@ app.get('/simulate',accessToken, (req,res)=> {
     } 
 });
 
-app.get("/confirmation",(req,res)=>{
+app.post("/confirmation",(req,res)=>{
 res.status(200).json(req.body);
 //  console.log(req.body);
 });
 
-app.get("/validation",(req,res)=>{
+
+app.post("/validation",(req,res)=>{
 res.status(200).json(req.body);
 // console.log(req.body);
 })
