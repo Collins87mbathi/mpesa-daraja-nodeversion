@@ -2,24 +2,14 @@ const {model,Schema} = require("mongoose");
 
 
 const PaymentSchema = new Schema({
-    TransactionType:{
-        type:String,
-    },
-    TransTime:{
-      type:String
-    },
-    TransAmount:{
-        type:String
-    },
-    BusinessShortCode:{
-        type:String,
-    },
-    BillRefNumber:{
-        type:String,
-    },
-    MSISDN:{
-        type:String,
-    },
+    transacType: String,
+    transactionID: String,
+    transactionTime: Date,
+    Amount: String,
+    OrganizationBalance: String,
+    phoneNumber: String,
+    firstName: String,
+    lasteName: String,
 })
 
 module.exports = model("Payment",PaymentSchema);
