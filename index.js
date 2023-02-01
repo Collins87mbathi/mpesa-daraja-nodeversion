@@ -101,14 +101,12 @@ app.post("/confirmation",(req,res)=> {
     let transactionDate = (`${year}-${month}-${day} ${hour}:${minute}:${second}`);
 
     let transaction = new Payment ( {
-        transacType: req.body.TransactionType,
+        transactionType: req.body.TransactionType,
         transactionID: req.body.TransID,
         transactionTime: transactionDate,
         Amount: req.body.TransAmount,
-        OrganizationBalance: req.body.OrgAccountBalance,
+        BillRefNumber:req.body.BillRefNumber,
         phoneNumber: req.body.MSISDN,
-        firstName: req.body.FirstName,
-        lasteName: req.body.LastName,
     });
     transaction.save ()
     .then ( (transaction) => {
@@ -119,12 +117,13 @@ app.post("/confirmation",(req,res)=> {
             id: transaction._id
         });
     })
-    .catch ( (err) => {
-        res
-        .status(500)
-        .json (
-            err.massage
-        );
+    .catch ((err) => {
+        // res
+        // .status(500)
+        // .json (
+        //     err.massage
+        // );
+        console.log(err);
     })
 });
 
