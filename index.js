@@ -90,11 +90,39 @@ app.get('/simulate',accessToken, (req,res)=> {
 });
 
 app.post("/confirmation",(req,res)=> {
-    if(!req.body) res.status(400).json("no body")
-        // await Payment.create(req.body);
-        res.status(200).json(req.body);
-        //  console.log(req.body);  
-      
+     let year = (req.body.TransTime).slice(0,4); 
+     let month = (req.body.TransTime).slice(4, 6); 
+     let day = (req.body.TransTime).slice(6,8); 
+     let hourString = (req.body.TransTime).slice(8,10); 
+     let hour = parseInt(hourString) + 3; 
+     let minute = (req.body.TransTime).slice(10,12); 
+     let second = (req.body.TransTime).slice(12,14); 
+  
+ let transactionDate = (`${year}-${month}-${day} ${hour}:${minute}:${second}`); 
+    let payment = new Payment({
+        TransactionType:req.body.TransactionType,
+        TransTime:transactionDate,
+        TransAmount:req.body.TransAmount,
+        BusinessShortCode:req.body.BusinessShortCode,
+        BillRefNumber:req.body.BillRefNumber,
+        MSISDN:req.body.MSISDN,
+    })
+    payment.save()
+    .then((transaction) => { 
+                res 
+                .status(201) 
+                .json({ 
+                message:'Transaction saved to the database successfully', 
+                id: transaction._id 
+                }); 
+              }) 
+            .catch((err)=> { 
+            res 
+               .status(500) 
+               .json( 
+                err.massage 
+              ); 
+            }) 
 });
 
 
