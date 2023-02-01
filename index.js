@@ -14,7 +14,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
 //database
-CONNECTDB(process.env.MONGO_DB_URL);
+CONNECTDB("mongodb+srv://mbathi:shanicecole@cluster0.hex8l.mongodb.net/payment_Data?retryWrites=true&w=majority");
 
 app.get("/", (req, res) => {
   res.send("its mpesa api");
