@@ -90,7 +90,7 @@ app.get("/simulate", accessToken, (req, res) => {
   }
 });
 
-app.post("/confirmation", async (req, res) => {
+app.get("/confirmation", async (req, res) => {
   try {
     let year = req.body.TransTime.slice(0, 4);
     let month = req.body.TransTime.slice(4, 6);
@@ -116,7 +116,7 @@ app.post("/confirmation", async (req, res) => {
       id: transaction._id,
     });
   } catch (error) {
-    res.status(500).json(error.response.message);
+    res.status(500).json(error);
   }
 });
 
