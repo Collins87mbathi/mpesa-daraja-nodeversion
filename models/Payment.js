@@ -5,7 +5,6 @@ const PaymentSchema = new Schema({
     transactionType: String,
     transactionID: String,
     transactionTime: Date,
-    BillRefNumber: String,
     Amount: String,
     phoneNumber: String,
 })

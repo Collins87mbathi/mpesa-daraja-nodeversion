@@ -4,12 +4,14 @@ const app = express();
 const accessToken = require("./utils/auth");
 const CONNECTDB = require("./Database/connect");
 const Payment = require("./models/Payment");
+const cors = require("cors");
 const port = 5000;
 require("dotenv").config();
 
 
 app.use(express.json());
-app.use(express.urlencoded({extended:true}))
+app.use(express.urlencoded({extended:true}));
+app.use(cors());
 
 //database
 CONNECTDB(process.env.MONGO_DB_URL)
@@ -30,7 +32,7 @@ app.get('/register',accessToken, (req,res)=> {
                 "Authorization": auth
             },
             json: {
-                "ShortCode": 600980,
+                "ShortCode":"600999",
                 "ResponseType": "Completed",
                 "ConfirmationURL": "https://collinsrenter.onrender.com/confirmation",
                 "ValidationURL": "https://collinsrenter.onrender.com/validation"
@@ -65,11 +67,10 @@ app.get('/simulate',accessToken, (req,res)=> {
                 "Authorization": auth
             },
             json: {
-                "ShortCode": 600980,
-                "CommandID": "CustomerPayBillOnline",
-                "Amount": "10",
-                "Msisdn": "254791686851",
-                "BillRefNumber": "A5"
+        "ShortCode":"600999",
+        "CommandID": "CustomerBuyGoodsOnline",
+        "Amount": "10",
+        "Msisdn": "254708374149",
               }
         },
         function (e, response, body) {
@@ -105,7 +106,6 @@ app.post("/confirmation",(req,res)=> {
         transactionID: req.body.TransID,
         transactionTime: transactionDate,
         Amount: req.body.TransAmount,
-        BillRefNumber:req.body.BillRefNumber,
         phoneNumber: req.body.MSISDN,
     });
     transaction.save ()
@@ -118,12 +118,11 @@ app.post("/confirmation",(req,res)=> {
         });
     })
     .catch ((err) => {
-        // res
-        // .status(500)
-        // .json (
-        //     err.massage
-        // );
-        console.log(err);
+        res
+        .status(500)
+        .json (
+            err.message
+        );
     })
 });
 
