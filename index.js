@@ -102,7 +102,7 @@ app.post("/confirmation", async (req, res) => {
 
     let transactionDate = `${year}-${month}-${day} ${hour}:${minute}:${second}`;
 
-    let transaction = new Payment({
+    const transaction = new Payment({
       transactionType: req.body.TransactionType,
       transactionID: req.body.TransID,
       transactionTime: transactionDate,
@@ -112,11 +112,11 @@ app.post("/confirmation", async (req, res) => {
     await transaction.save();
 
     res.status(200).json({
-      message: "the transaction was successfully made",
+      message: "The transaction was successfully made",
       id: transaction._id,
     });
   } catch (error) {
-    res.status(500).json(error);
+    res.status(500).json(error.response.message);
   }
 });
 
