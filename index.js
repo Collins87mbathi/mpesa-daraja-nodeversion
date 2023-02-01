@@ -89,21 +89,24 @@ app.get('/simulate',accessToken, (req,res)=> {
     } 
 });
 
-app.post("/confirmation",async(req,res)=>{
-    try {
-        await Payment.create(req.body);
+app.post("/confirmation",(req,res)=> {
+    if(!req.body) res.status(400).json("no body")
+        // await Payment.create(req.body);
         res.status(200).json(req.body);
         //  console.log(req.body);  
-    } catch (error) {
-       res.status(500).json(error); 
-    }
-  
+      
 });
 
 
 app.post("/validation",(req,res)=>{
-res.status(200).json(req.body);
-// console.log(req.body);
+    try {
+        if(!req.body) res.status(400).json("not found")
+        res.status(200).json(req.body);
+        // console.log(req.body);   
+    } catch (error) {
+        res.status(500).json(error);
+    }
+
 })
 
 app.listen(port,()=> {
