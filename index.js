@@ -32,7 +32,7 @@ app.get("/register", accessToken, (req, res) => {
           Authorization: auth,
         },
         json: {
-          ShortCode: "600999",
+          ShortCode: 600999,
           ResponseType: "Completed",
           ConfirmationURL: "https://collinsrenter.onrender.com/confirmation",
           ValidationURL: "https://collinsrenter.onrender.com/validation",
@@ -90,7 +90,7 @@ app.get("/simulate", accessToken, (req, res) => {
   }
 });
 
-app.get("/confirmation", async (req, res) => {
+app.post("/confirmation", async (req, res) => {
   try {
     let year = req.body.TransTime.slice(0, 4);
     let month = req.body.TransTime.slice(4, 6);
@@ -102,7 +102,7 @@ app.get("/confirmation", async (req, res) => {
 
     let transactionDate = `${year}-${month}-${day} ${hour}:${minute}:${second}`;
 
-    const transaction = new Payment({
+    const transaction = await Payment.create({
       transactionType: req.body.TransactionType,
       transactionID: req.body.TransID,
       transactionTime: transactionDate,
@@ -116,8 +116,7 @@ app.get("/confirmation", async (req, res) => {
       id: transaction._id,
     });
   } catch (error) {
-    // res.status(500).json(error);
-    console.log(error);
+    res.status(500).json(error);
   }
 });
 
